@@ -102,5 +102,6 @@ Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 
 ## License
 
-[EUPL-1.2](LICENSE) — same as the OpenLamp apps. (The shared convention repo,
-[wled-midi](https://github.com/openlamp/wled-midi), is MIT so anyone can implement it.)
+[MIT](LICENSE) — like the rest of the OpenLamp galaxy: permissive, so anyone can adopt or
+fork it freely. (The shared convention repo, [wled-midi](https://github.com/openlamp/wled-midi),
+is MIT too.)
