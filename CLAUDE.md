@@ -10,8 +10,7 @@ Ableton Live frontend for the OpenLamp lamp stack.
 - **IS NOT**: a MIDI protocol. The wire convention lives in
   [openlamp/wled-midi](https://github.com/openlamp/wled-midi) and MUST NOT be
   duplicated here — reference it and pin a version. Ableton is just one frontend that
-  speaks it (the Stream Deck plugin [lumideck](https://github.com/openlamp/lumideck)
-  is a peer frontend).
+  speaks it (a Stream Deck plugin is a peer frontend).
 
 ## Golden rules
 
