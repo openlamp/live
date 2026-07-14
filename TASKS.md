@@ -12,6 +12,7 @@ matériel** ; Mode B = **décidé (Max for Live)**, pas commencé.
 - ☐ Confirmer l'import des clips CC-sweep (`cc1-bri`, `cc3-hue`) dans Live → si Live ne porte pas le CC en automation, documenter le « redraw as clip automation » ou livrer un `.alc`
 - ☐ Authorer `ableton/OpenLamp-demo.als` → 1 piste MIDI/cible pré-routée au port `OpenLamp`, clips posés → set démo turnkey. **Faisable à froid** (Ableton seul, sans lampes) via computer-use.
 - ☐ **[repo engine]** Packager le moteur en **appli no-install** (`.app`/`.exe`, barre de menu, signée, headless) → enlève la seule barrière du chemin universel (« lancer un process Python »). Suivi dans [openlamp/engine](https://github.com/openlamp/engine).
+- ☐ **Feedback value-level sans M4L** : une fois le port de retour `OpenLamp Feedback` émis par le moteur (voir engine/TASKS), documenter/livrer le mapping dans Live (MIDI-map des CC entrants → faders/contrôles) → un fader suit la brillance réelle, un bouton reflète on/off. Reste Tier 1 (toutes éditions, tout DAW). Le rendu riche (couleur/nom d'effet) reste Tier 2 (M4L).
 - ☐ Ajouter au README parapluie OpenLamp une fois le pack validé end-to-end
 
 ## Tier 2 — intégré au mieux (Mode B = Max for Live, décidé)
