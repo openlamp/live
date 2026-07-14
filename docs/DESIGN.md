@@ -60,8 +60,28 @@ From the musician's side the protocol is **plain MIDI 1.0** on a virtual port
 (`OpenLamp`): notes → colours/power, CC → brightness/hue/sat/CCT/fx, Program Change →
 presets, MIDI clock → tempo. `midi.py` then POSTs to the engine's loopback API
 (`127.0.0.1:8377/cmd`); the engine holds the persistent connections and emits the WLED
-**HTTP JSON** patch (`POST http://<lamp>/json/state`). Because this leg is **MIDI going
-out only**, Mode A is **one-way** — which is exactly why feedback needs Mode B (below).
+**HTTP JSON** patch (`POST http://<lamp>/json/state`).
+
+**On feedback — the clip is one-way, but Mode A isn't necessarily.** A `.mid` *clip*
+only plays out (it reads nothing back), but nothing stops the engine from opening a
+**second, return MIDI port** (`OpenLamp Feedback`, engine → Live): the engine subscribes
+to WLED's state WebSocket (`ws://<lamp>/ws`) and re-emits lamp state as MIDI (CC =
+brightness/hue/sat, note = on/off, CC = effect index). What gates this is not the
+transport but **what stock Live can DO with incoming MIDI**:
+
+- **Value-level feedback → stays Tier 1** (no M4L, all editions): an incoming CC can be
+  **MIDI-mapped** to an on-screen control, so a fader follows the real brightness, a
+  button reflects on/off. Good for hardware controllers with faders/LEDs.
+- **Hardware echo** (motorised fader, controller LEDs): stock MIDI-map doesn't auto-echo
+  out; that usually wants a Control Surface script (Mode B territory).
+- **Rich/visual feedback** (the true colour as a swatch, effect *names*, a readable panel
+  in Live) → **needs a program that renders it** = **Mode B (M4L)**. A raw CC carries a
+  number, not a colour or a label.
+
+So the split is by **richness of feedback**, not "A has none, B has all": value-level
+feedback via a return MIDI port is a Tier-1 option; rich visual feedback is what M4L is
+for. In both cases the **engine** is what produces the feedback (it consumes WLED's
+WebSocket) — feedback needs *a program somewhere*, not M4L specifically.
 
 - **The convention already exists and is tested** —
   [wled-midi](https://github.com/openlamp/wled-midi): notes → colours/power, CC →
@@ -92,13 +112,13 @@ below). This mode earns its keep with two advantages the pack can't give:
    goal above — **just Ableton + lamps on the LAN**, nothing else to launch. (It can
    still delegate to the engine on `:8377` when the engine is running, to stay in sync
    with the Stream Deck.)
-2. **Bidirectional feedback** — the lamps' **real** state (on/off, colour, brightness,
-   effect) flows *back* into Live, so the device UI shows the true colour, a motorised
-   fader follows the real brightness, and state never drifts when the Stream Deck (or
-   anything else) changes a lamp. **A one-way `.mid` clip stream cannot read anything
-   back** → feedback structurally *requires* a running program in Live, i.e. Mode B.
-   WLED even **pushes** state over a WebSocket (`ws://<lamp>/ws`), so a device can
-   subscribe and reflect changes live.
+2. **Rich, in-Live visual feedback** — the lamps' **real** state shown *as state*: the
+   true colour as a swatch, the effect **name**, a readable device panel; state never
+   drifts when the Stream Deck (or anything else) changes a lamp. Note the nuance (see
+   Mode A → *On feedback*): **value-level** feedback (a fader following brightness) is a
+   Tier-1 option via a return MIDI port + MIDI-mapping, no M4L. What M4L uniquely buys is
+   **rendering** state a raw CC can't carry — colours, labels, a panel. WLED **pushes**
+   state over a WebSocket (`ws://<lamp>/ws`), which the device subscribes to.
 
 ## Decision
 
@@ -115,7 +135,7 @@ convention (A) is what B implements natively.
 | Reaches lamps with **only Ableton + LAN** | No (needs the bridge process) | **Yes** (script talks to lamps directly) |
 | Depends on Ableton's private API | No | Yes (version-fragile) |
 | Clip automation of lamp params | **Native** | Native |
-| Feedback into Live / controller | No | **Yes** |
+| Feedback into Live / controller | Value-level (return MIDI port + MIDI-map) | **Rich/visual** (colour swatch, effect name, panel) |
 | Works in other DAWs | **Yes** | Live-only |
 | Maintenance cost | Low | Higher |
 | Ships | **v1** | **v2** |
