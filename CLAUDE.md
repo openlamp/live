@@ -28,7 +28,7 @@ Ableton Live frontend for the OpenLamp lamp stack.
   pack generator.
 - **Mode B is version-fragile by nature** (Live's Remote Script API is semi-private).
   Pin a Live version, prefer Max for Live if it satisfies the direct-to-LAN goal.
-- **Family conventions apply** (EUPL-1.2, one concern per repo, English public docs,
+- **Family conventions apply** (MIT, one concern per repo, English public docs,
   Conventional Commits). New repos go to GitHub under the `openlamp` org.
 
 ## Stack
