@@ -8,12 +8,9 @@ speaking the [wled-midi](https://github.com/openlamp/wled-midi) convention); Mod
 ## Prerequisites
 
 1. Lamps reachable on your LAN (WLED and/or Tuya), configured in the OpenLamp engine.
-2. The MIDI→lamp path running. Today that's the bridge, which opens a virtual MIDI
-   port (currently named `LumiDeck`; being neutralised — see
-   [wled-midi/TASKS.md](https://github.com/openlamp/wled-midi/blob/main/TASKS.md)):
+2. The engine's MIDI frontend running — it opens the `OpenLamp` virtual MIDI port:
    ```
-   pip install openlamp-midi
-   lumideck-midi          # opens the lamp MIDI input port
+   python3 midi.py        # from github.com/openlamp/engine — opens the "OpenLamp" port
    ```
 
 ## Route Live to the lamps

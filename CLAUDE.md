@@ -37,6 +37,6 @@ Ableton Live frontend for the OpenLamp lamp stack.
 Live ──MIDI (wled-midi)──▶ lamp port ──▶ engine ──HTTP/UDP──▶ lamps   (Mode A)
 Live (Remote Script / M4L) ──────────HTTP/UDP──────────────────▶ lamps   (Mode B, direct-to-LAN)
 
-(Today the MIDI→lamp step runs in the openlamp-midi bridge; it is folding into
-the engine, and the port — currently `LumiDeck` — is being renamed to a neutral name.)
+(The MIDI→lamp step runs in the engine's midi.py — the wled-midi reference impl —
+opening the `OpenLamp` virtual MIDI port. Tempo-follow is the openlamp-midi package.)
 ```
