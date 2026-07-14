@@ -1,22 +1,24 @@
 # CLAUDE.md — openlamp-live
 
-Ableton Live integration layer for the OpenLamp / LumiDeck lamp stack.
+Ableton Live frontend for the OpenLamp lamp stack.
 
 ## What this repo is (and is NOT)
 
-- **IS**: the Ableton-Live-native layer — a MIDI pack (Mode A) and, later, a Control
+- **IS**: the Ableton-Live frontend — a MIDI pack (Mode A) and, later, a Control
   Surface (Mode B) — that lets a user program lamp automations from Live with only
   Ableton + lamps on the LAN. See [docs/DESIGN.md](docs/DESIGN.md).
 - **IS NOT**: a MIDI protocol. The wire convention lives in
-  [openlamp/midi](https://github.com/openlamp/midi) (`MIDI-PROTOCOL.md`) and MUST NOT
-  be duplicated here — reference it. This repo only makes that convention turnkey
-  inside Live.
+  [openlamp/wled-midi](https://github.com/openlamp/wled-midi) and MUST NOT be
+  duplicated here — reference it and pin a version. Ableton is just one frontend that
+  speaks it (the Stream Deck plugin [lumideck](https://github.com/openlamp/lumideck)
+  is a peer frontend).
 
 ## Golden rules
 
-- **Do not re-implement the bridge or the OLS contract.** Mode A rides the existing
-  `LumiDeck` virtual port + engine local API (`127.0.0.1:8377`). Mode B may talk to
-  lamps directly over the LAN, but reuse the OLS command vocabulary, don't fork it.
+- **Do not re-implement the convention or the engine.** Mode A emits the
+  [wled-midi](https://github.com/openlamp/wled-midi) convention to the lamp MIDI port;
+  the engine drives the devices. Mode B may talk to lamps directly over the LAN, but
+  it still speaks the same convention — don't fork it.
 - **Everything derives from `ableton/mapping.spec.json`.** The `.mid` clips are
   generated (open format) via `tools/gen_clips.py`; the `.als` template is exported
   once from Live (its binary format is Ableton's, version-fragile — don't synthesize
@@ -32,6 +34,9 @@ Ableton Live integration layer for the OpenLamp / LumiDeck lamp stack.
 ## Stack
 
 ```
-Live ──MIDI──▶ LumiDeck port ──▶ openlamp-midi ──HTTP──▶ engine ──▶ lamps   (Mode A)
-Live (Remote Script / M4L) ─────────────HTTP/UDP────────────────▶ lamps     (Mode B, direct-to-LAN)
+Live ──MIDI (wled-midi)──▶ lamp port ──▶ engine ──HTTP/UDP──▶ lamps   (Mode A)
+Live (Remote Script / M4L) ──────────HTTP/UDP──────────────────▶ lamps   (Mode B, direct-to-LAN)
+
+(Today the MIDI→lamp step runs in the openlamp-midi bridge; it is folding into
+the engine, and the port — currently `LumiDeck` — is being renamed to a neutral name.)
 ```

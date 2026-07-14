@@ -1,14 +1,18 @@
 # openlamp-live — drive your lamps from Ableton Live
 
 Turn a **track in Ableton Live** into a lamp/show controller: clips, macros and
-automation envelopes drive your [OpenLamp / LumiDeck](https://github.com/openlamp/openlamp)
-smart LED lamps (WLED + Tuya) **on the beat, in time with your set** — 100 % local,
-no cloud.
+automation envelopes drive your [OpenLamp](https://github.com/openlamp) smart LED
+lamps (WLED + Tuya) **on the beat, in time with your set** — 100 % local, no cloud.
 
-This repo is the **Ableton Live integration layer** of the OpenLamp stack. It does
-not re-implement MIDI control — it sits on top of the existing, stable
-[LumiDeck MIDI convention](https://github.com/openlamp/midi/blob/main/MIDI-PROTOCOL.md)
-and makes it turnkey inside Live.
+This repo is the **Ableton Live frontend** of the OpenLamp stack. It doesn't invent
+a protocol: it speaks the open
+**[wled-midi convention](https://github.com/openlamp/wled-midi)** (notes → colours,
+CC → brightness/effects, Program Change → presets, MIDI clock / Ableton Link →
+on-the-beat) and makes it turnkey inside Live.
+
+Ableton is **one** way to drive the lamps. The same convention is also spoken by the
+[Stream Deck plugin](https://github.com/openlamp/lumideck) and any hardware MIDI
+controller — pick whichever surface fits the moment.
 
 ## What you can do with it
 
@@ -34,64 +38,61 @@ obvious starting point — but it's a floor, not a ceiling.
 - **⏺ Record & replay your light performance.** Play the lights by hand once — a
   footswitch for a blackout on the drop, a fader sweeping brightness through the
   build — while Live records the MIDI. Every show after that replays it note-perfect.
-  *(Arm a MIDI track routed to `LumiDeck`; Live captures your moves as automation.)*
+  *(Arm a MIDI track routed to the lamp port; Live captures your moves as automation.)*
 
 - **🎚 Multi-zone staging.** Front lamps ride the beat while the back wash holds the
   section's ambiance — two independent behaviours at once.
-  *(Channel-per-group: one Live track and channel per lamp group.)*
+  *(Channel-per-target: one Live track and channel per lamp / group.)*
 
 - **👆 Whole-rig tempo, one tap.** Tap the tempo once and every Ableton Link app *and*
   the lamps follow — synths, drum machines and lights on the same clock.
-  *(Ableton Link session tempo, via [openlamp-midi](https://github.com/openlamp/midi).)*
+  *(Ableton Link session tempo.)*
 
 Everything is local: Ableton + lamps on your Wi-Fi, nothing in the cloud.
-
-| Layer | Repo | Role |
-|---|---|---|
-| **core** | [openlamp/engine](https://github.com/openlamp/engine) | LED interface + OpenLamp State (OLS) contract + engine (local API on `127.0.0.1:8377`) |
-| **midi** | [openlamp/midi](https://github.com/openlamp/midi) | MIDI → OLS overlay: virtual port `LumiDeck`, channels-as-groups, notes/CC/PC/clock |
-| **live** | **this repo** | Ableton-Live-native pack that speaks the MIDI convention |
 
 ## How it works
 
 ```
-Ableton Live  ──MIDI──▶  "LumiDeck" virtual port  ──▶  openlamp-midi bridge  ──HTTP──▶  engine  ──▶  lamps
- (clips, macros,          (from openlamp/midi)          (MIDI → OLS)          :8377         (WLED/Tuya)
-  automation)
+Ableton Live  ──MIDI──▶  OpenLamp engine  ──HTTP/UDP──▶  lamps on the LAN
+ (clips, macros,          (implements the                 (WLED / Tuya)
+  automation)              wled-midi convention)
 ```
 
-Live never talks to a lamp directly. It emits MIDI on the `LumiDeck` port; the
-[openlamp-midi](https://github.com/openlamp/midi) bridge translates it to OpenLamp
-State and the engine drives the devices. So this repo is mostly **Ableton-side
-assets + docs** — the runtime already exists in the bridge.
+Live emits MIDI per the [wled-midi](https://github.com/openlamp/wled-midi) convention;
+the engine translates it to WLED JSON state (and Tuya) and drives the devices.
+
+> Today the MIDI→lamp translation runs in the [openlamp-midi](https://github.com/openlamp/midi)
+> bridge, which opens a virtual MIDI port (currently named `LumiDeck`) and calls the
+> engine's local API. That translation is moving **into the engine**, and the port is
+> being renamed to a neutral name — tracked in
+> [wled-midi/TASKS.md](https://github.com/openlamp/wled-midi/blob/main/TASKS.md).
 
 ## What this project delivers
 
-- **An Ableton Live pack** — a MIDI track routed to `LumiDeck` carries notes
-  (colour/power/animation triggers) and CC automation (brightness/hue/sat/CCT/fx).
-  Shipped as **draggable `.mid` clips generated from the mapping spec** (open,
-  reproducible format) plus a pre-routed demo `.als` template. Stock Live only, no
-  private API. **← the foundation.**
-- **A documented setup path** — [docs/ABLETON-SETUP.md](docs/ABLETON-SETUP.md):
-  create the `LumiDeck` port, route a Live track to it, pick the channel per group.
-- **A Control Surface (MIDI Remote Script)** — *on the roadmap (v2)*, for players
-  who want lamps in Live's Preferences → MIDI → Control Surface slot with feedback.
-  Deferred on purpose — see [docs/DESIGN.md](docs/DESIGN.md) for why the pack comes
-  first.
+- **An Ableton Live pack** — a MIDI track routed to the lamp port carries notes
+  (colour/power triggers) and CC automation (brightness/hue/sat/CCT/fx). Shipped as
+  **draggable `.mid` clips generated from the mapping** (open, reproducible format)
+  plus a pre-routed demo `.als` template. Stock Live only, no private API.
+- **A documented setup path** — [docs/ABLETON-SETUP.md](docs/ABLETON-SETUP.md).
+- **A Control Surface (Max for Live / Remote Script)** — *on the roadmap (v2)*, so a
+  script inside Live can reach the lamps **directly over the LAN** (no separate
+  daemon) with feedback. See [docs/DESIGN.md](docs/DESIGN.md).
 
 ## Status
 
-🚧 **Mode A in progress** — convention spec + 19 generated `.mid` clips shipped;
-next is testing on real lamps and authoring the pre-routed `.als` template. Mode B
-(Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
+🚧 **Mode A in progress** — mapping pinned to the wled-midi convention + 16 generated
+`.mid` clips shipped; next is testing on real lamps and authoring the `.als` template.
+Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 
 ## Requirements
 
-- The running OpenLamp engine + the [openlamp-midi](https://github.com/openlamp/midi)
-  bridge (`pip install openlamp-midi`), which opens the `LumiDeck` virtual MIDI port.
+- The OpenLamp engine running on the LAN (it speaks the
+  [wled-midi](https://github.com/openlamp/wled-midi) convention), plus — until the
+  MIDI step folds into the engine — the [openlamp-midi](https://github.com/openlamp/midi)
+  bridge that opens the MIDI port.
 - Ableton Live 10+ (the pack uses only stock MIDI devices — no private API).
 
 ## License
 
-[EUPL-1.2](LICENSE) — same as the rest of the OpenLamp family (compatible with
-Ableton Link's GPLv2 per the EUPL appendix).
+[EUPL-1.2](LICENSE) — same as the OpenLamp apps. (The shared convention repo,
+[wled-midi](https://github.com/openlamp/wled-midi), is MIT so anyone can implement it.)

@@ -1,15 +1,12 @@
 {
-  "_comment": "Source-of-truth mirror of the LumiDeck MIDI convention (openlamp/midi lumideck_midi.py DEFAULT). The clip generator (../tools/gen_clips.py) and the docs read this. The wire protocol itself lives in openlamp/midi/MIDI-PROTOCOL.md — do not diverge from it.",
-  "port": "LumiDeck",
-  "protocol": "https://github.com/openlamp/midi/blob/main/MIDI-PROTOCOL.md",
-  "channels": { "1": "all", "2": "front", "3": "back", "4": "L1", "5": "L2" },
+  "_comment": "Pinned clip-naming mirror of the wled-midi v0.1.0 CORE (github.com/openlamp/wled-midi). The wire semantics (which note = which WLED payload, CC transforms) live THERE — this file only gives the clip generator the note numbers + human labels for filenames. Do not diverge; bump when wled-midi bumps.",
+  "spec_ref": "https://github.com/openlamp/wled-midi",
+  "spec_version": "0.1.0",
   "notes": {
-    "60": "jaune", "61": "violet", "62": "orange", "63": "bleuclair",
-    "64": "rouge", "65": "vert", "66": "rose", "67": "bleu",
-    "48": "off", "50": "on", "52": "toggle", "53": "blackout", "55": "restore",
-    "56": "mode:music", "57": "animstop", "58": "flash:blanc@300",
-    "59": "cycle:jaune,violet,rouge,vert@800"
+    "60": "red", "61": "orange", "62": "yellow", "63": "green",
+    "64": "cyan", "65": "blue", "66": "magenta", "67": "white",
+    "48": "off", "50": "on", "52": "toggle",
+    "53": "blackout", "55": "restore", "56": "solid"
   },
-  "cc": { "1": "bri", "2": "cct", "3": "hue", "4": "sat", "5": "fx", "6": "sx", "7": "ix" },
-  "programs": []
+  "cc": { "1": "bri", "2": "cct", "3": "hue", "4": "sat", "5": "fx", "6": "sx", "7": "ix", "8": "pal" }
 }
