@@ -61,11 +61,11 @@ Ableton Live  ──MIDI──▶  OpenLamp engine  ──HTTP/UDP──▶  lam
 Live emits MIDI per the [wled-midi](https://github.com/openlamp/wled-midi) convention;
 the engine translates it to WLED JSON state (and Tuya) and drives the devices.
 
-> Today the MIDI→lamp translation runs in the [openlamp-midi](https://github.com/openlamp/midi)
-> bridge, which opens a virtual MIDI port (currently named `LumiDeck`) and calls the
-> engine's local API. That translation is moving **into the engine**, and the port is
-> being renamed to a neutral name — tracked in
-> [wled-midi/TASKS.md](https://github.com/openlamp/wled-midi/blob/main/TASKS.md).
+> The MIDI→lamp translation runs in the engine's
+> [`midi.py`](https://github.com/openlamp/engine/blob/main/midi.py) — the reference
+> implementation of the [wled-midi](https://github.com/openlamp/wled-midi) convention —
+> which opens the `OpenLamp` virtual MIDI port. (On-the-beat tempo-follow is the
+> separate [openlamp-midi](https://github.com/openlamp/midi) package.)
 
 ## What this project delivers
 
@@ -86,10 +86,10 @@ Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 
 ## Requirements
 
-- The OpenLamp engine running on the LAN (it speaks the
-  [wled-midi](https://github.com/openlamp/wled-midi) convention), plus — until the
-  MIDI step folds into the engine — the [openlamp-midi](https://github.com/openlamp/midi)
-  bridge that opens the MIDI port.
+- The OpenLamp engine running on the LAN, with its MIDI frontend
+  ([`midi.py`](https://github.com/openlamp/engine/blob/main/midi.py)) open — it speaks
+  the [wled-midi](https://github.com/openlamp/wled-midi) convention and opens the
+  `OpenLamp` virtual MIDI port.
 - Ableton Live 10+ (the pack uses only stock MIDI devices — no private API).
 
 ## License

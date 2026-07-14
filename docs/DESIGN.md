@@ -18,9 +18,9 @@ complementary, not either/or.
 ### Mode A — base MIDI API  (the stable foundation)
 
 Live emits standard MIDI per the
-[wled-midi convention](https://github.com/openlamp/wled-midi); the engine (today via
-the [openlamp-midi](https://github.com/openlamp/midi) bridge) translates it to WLED
-JSON state / Tuya and drives the lamps.
+[wled-midi convention](https://github.com/openlamp/wled-midi); the engine (via its
+[`midi.py`](https://github.com/openlamp/engine/blob/main/midi.py)) translates it to
+WLED JSON state / Tuya and drives the lamps.
 
 - **The convention already exists and is tested** —
   [wled-midi](https://github.com/openlamp/wled-midi): notes → colours/power, CC →
@@ -36,9 +36,9 @@ JSON state / Tuya and drives the lamps.
   Note: a **stock Live macro does not emit outgoing CC** — turning a knob into an
   outgoing CC value needs a Max for Live device, which is Mode B territory. Mode A's
   continuous control is therefore **clip/arrangement CC automation**, not macros.
-- Cost to the user: run the bridge (`pip install openlamp-midi`), which opens the
-  lamp MIDI port. One small Python process alongside Live (folding into the engine —
-  see [wled-midi tasks](https://github.com/openlamp/wled-midi/blob/main/TASKS.md)).
+- Cost to the user: run the engine's
+  [`midi.py`](https://github.com/openlamp/engine/blob/main/midi.py), which opens the
+  `OpenLamp` MIDI port. One small process alongside Live.
 
 ### Mode B — Control Surface (MIDI Remote Script)  (tighter + standalone)
 
