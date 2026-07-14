@@ -1,12 +1,13 @@
 {
-  "_comment": "Pinned clip-naming mirror of the wled-midi v0.1.0 CORE (github.com/openlamp/wled-midi). The wire semantics (which note = which WLED payload, CC transforms) live THERE — this file only gives the clip generator the note numbers + human labels for filenames. Do not diverge; bump when wled-midi bumps.",
+  "_comment": "Pinned clip-naming mirror of the wled-midi v0.2.0 default map (github.com/openlamp/wled-midi). The wire semantics + zone rules live THERE — this file only gives the clip generator note numbers + human labels for filenames. Do not diverge; bump when wled-midi bumps.",
   "spec_ref": "https://github.com/openlamp/wled-midi",
-  "spec_version": "0.1.0",
+  "spec_version": "0.2.0",
   "notes": {
     "60": "red", "61": "orange", "62": "yellow", "63": "green",
-    "64": "cyan", "65": "blue", "66": "magenta", "67": "white",
+    "64": "cyan", "65": "blue", "66": "magenta", "67": "white", "68": "effect",
     "48": "off", "50": "on", "52": "toggle",
-    "53": "blackout", "55": "restore", "56": "solid"
+    "53": "blackout", "55": "restore", "56": "solid",
+    "72": "beat", "73": "flash"
   },
   "cc": { "1": "bri", "2": "cct", "3": "hue", "4": "sat", "5": "fx", "6": "sx", "7": "ix", "8": "pal" }
 }
