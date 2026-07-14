@@ -40,6 +40,13 @@ obvious starting point — but it's a floor, not a ceiling.
   build — while Live records the MIDI. Every show after that replays it note-perfect.
   *(Arm a MIDI track routed to the lamp port; Live captures your moves as automation.)*
 
+- **🎛 Sculpt colour live from a MIDI controller.** Assign three knobs or faders to
+  hue, saturation and brightness and *paint* the colour by hand — sweep the hue across
+  the spectrum on a build, desaturate to white on the breakdown, dim on the outro — all
+  in time with what you're playing. With an MPE controller (Push 3, Seaboard) you can go
+  further and shape each lamp's colour per-note.
+  *(CC 3 hue + CC 4 saturation + CC 1 brightness, continuous, per group; or the MPE profile.)*
+
 - **🎚 Multi-zone staging.** Front lamps ride the beat while the back wash holds the
   section's ambiance — two independent behaviours at once.
   *(Channel-per-target: one Live track and channel per lamp / group.)*
