@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate draggable Ableton MIDI clips (.mid) from the LumiDeck mapping spec.
+"""Generate draggable Ableton MIDI clips (.mid) from the wled-midi mapping spec.
 
 Why .mid and not .als/.adg: a Standard MIDI File is an open, stable format we can
 write byte-for-byte with the stdlib and that Live imports by drag-and-drop. The
@@ -7,7 +7,7 @@ write byte-for-byte with the stdlib and that Live imports by drag-and-drop. The
 synthesize those headless (see docs/DESIGN.md).
 
 How the clips are used: drop a clip onto a MIDI track whose output is routed to the
-`LumiDeck` port (see docs/ABLETON-SETUP.md). Each clip fires the mapped OpenLamp
+`OpenLamp` port (see docs/ABLETON-SETUP.md). Each clip fires the mapped OpenLamp
 action. The *track's* channel selects the lamp group (channel-per-group), so every
 clip is written on channel 1 and inherits the track's routing.
 

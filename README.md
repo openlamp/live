@@ -10,8 +10,8 @@ a protocol: it speaks the open
 CC → brightness/effects, Program Change → presets, MIDI clock / Ableton Link →
 on-the-beat) and makes it turnkey inside Live.
 
-Ableton is **one** way to drive the lamps. The same convention is also spoken by the
-LumiDeck Stream Deck plugin and any hardware MIDI
+Ableton is **one** way to drive the lamps. The same convention is also spoken by a
+Stream Deck plugin and any hardware MIDI
 controller — pick whichever surface fits the moment.
 
 ## What you can do with it
