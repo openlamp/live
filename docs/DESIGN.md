@@ -8,6 +8,33 @@ Decision record for `openlamp-live`.
 up lamp automations from Ableton.** Minimal moving parts, 100 % local, no cloud.
 The lamps (WLED + Tuya) live on the LAN; Live is where the show is programmed.
 
+## Guiding principle — reach everyone first, integrate deeply second
+
+**Accessibility for everyone comes first; the tightest integration comes second.**
+The widest, lowest-barrier path is built and polished before the premium,
+deeply-integrated one. This orders the whole roadmap into two tiers:
+
+**Tier 1 — accessible to everyone (breadth, zero barrier).** Any DAW, any Live
+edition, no terminal.
+
+- **Package the engine as a no-install desktop app** (`.app` / `.exe`, menu-bar,
+  signed, headless) — today the only real barrier on the universal path is "run a
+  Python process". Once the engine is a double-click app, *anyone* can run the
+  bridge, whatever frontend they use. (Engine-repo work — see
+  [openlamp/engine](https://github.com/openlamp/engine).)
+- **Mode A turnkey**: the generated `.mid` clip pack **+ a demo `.als`** — works in
+  every DAW and every Live edition, nothing fragile, nothing paid.
+
+**Tier 2 — best integration (depth, premium).**
+
+- **Mode B as a Max for Live device**: direct-to-LAN (no daemon), bidirectional
+  feedback, a real device UI on the track. Suite-only is acceptable *here* precisely
+  because Tier 1 already serves everyone — depth is allowed to be selective once
+  breadth is covered.
+
+This mirrors the rest of the OpenLamp galaxy — WLED-first, CC0 assets, an MIT
+convention: reach first, refine second.
+
 ## Two integration modes — we ship both
 
 The lamps speak HTTP/JSON/UDP on the network, not MIDI, so *something* must
@@ -21,6 +48,20 @@ Live emits standard MIDI per the
 [wled-midi convention](https://github.com/openlamp/wled-midi); the engine (via its
 [`midi.py`](https://github.com/openlamp/engine/blob/main/midi.py)) translates it to
 WLED JSON state / Tuya and drives the lamps.
+
+**Wire (two protocols in the chain):**
+
+```
+Ableton Live ──MIDI──▶ virtual port "OpenLamp" ──▶ midi.py ──HTTP──▶ engine :8377 ──HTTP──▶ WLED (LAN)
+   (clips)         (MIDI 1.0, CoreMIDI/rtmidi)   (translates)  (loopback /cmd)     (POST /json/state)
+```
+
+From the musician's side the protocol is **plain MIDI 1.0** on a virtual port
+(`OpenLamp`): notes → colours/power, CC → brightness/hue/sat/CCT/fx, Program Change →
+presets, MIDI clock → tempo. `midi.py` then POSTs to the engine's loopback API
+(`127.0.0.1:8377/cmd`); the engine holds the persistent connections and emits the WLED
+**HTTP JSON** patch (`POST http://<lamp>/json/state`). Because this leg is **MIDI going
+out only**, Mode A is **one-way** — which is exactly why feedback needs Mode B (below).
 
 - **The convention already exists and is tested** —
   [wled-midi](https://github.com/openlamp/wled-midi): notes → colours/power, CC →
@@ -40,29 +81,33 @@ WLED JSON state / Tuya and drives the lamps.
   [`midi.py`](https://github.com/openlamp/engine/blob/main/midi.py), which opens the
   `OpenLamp` MIDI port. One small process alongside Live.
 
-### Mode B — Control Surface (MIDI Remote Script)  (tighter + standalone)
+### Mode B — Control Surface (Max for Live — decided)  (tighter + standalone)
 
-A Python **Control Surface** that Live loads from Preferences → MIDI → *Control
-Surface*. This mode earns its keep with two advantages the pack can't give:
+A component that runs *inside* Live (a **Max for Live device** — decision + argument
+below). This mode earns its keep with two advantages the pack can't give:
 
-1. **Direct-to-LAN, no separate daemon.** The Remote Script runs *inside* Live and
-   can reach the WLED lamps **directly over the local network** (HTTP/UDP). That
-   collapses the setup to exactly the goal above — **just Ableton + lamps on the
-   LAN**, nothing else to launch. (It can still delegate to the engine when the
-   engine is running, to stay in sync with the Stream Deck.)
-2. **Bidirectional feedback** into Live's UI / the controller — lamp state, colours
-   and levels reflected back, which a one-way pack can't do.
-
-The trade-off is real and must be managed: Live's Remote Script API is
-**semi-private and version-fragile** (it shifted across Live 11/12). So Mode B is
-scoped against a pinned Live version and treated as the more brittle layer.
+1. **Direct-to-LAN, no separate daemon.** Runs *inside* Live and reaches the WLED
+   lamps **directly over the local network** — **HTTP** (`POST /json/state`) or WLED
+   **realtime UDP** (DDP/WARLS, port 21324). That collapses the setup to exactly the
+   goal above — **just Ableton + lamps on the LAN**, nothing else to launch. (It can
+   still delegate to the engine on `:8377` when the engine is running, to stay in sync
+   with the Stream Deck.)
+2. **Bidirectional feedback** — the lamps' **real** state (on/off, colour, brightness,
+   effect) flows *back* into Live, so the device UI shows the true colour, a motorised
+   fader follows the real brightness, and state never drifts when the Stream Deck (or
+   anything else) changes a lamp. **A one-way `.mid` clip stream cannot read anything
+   back** → feedback structurally *requires* a running program in Live, i.e. Mode B.
+   WLED even **pushes** state over a WebSocket (`ws://<lamp>/ws`), so a device can
+   subscribe and reflect changes live.
 
 ## Decision
 
-**Build A first, then B.** A is the stable, DAW-agnostic base and unblocks the whole
-feature immediately with zero fragile-API risk. B follows because it delivers a
-distinct win — the **standalone "Ableton + lamps only" experience** and feedback —
-that A structurally cannot. B does not replace A; a player can use either, and the
+**Build A first, then B** — per the guiding principle (reach first, integrate second).
+A is the stable, DAW-agnostic base and unblocks the whole feature immediately with zero
+fragile-API risk; making it truly turnkey means **packaging the engine as a no-install
+app + shipping the demo `.als`** (Tier 1). B follows because it delivers a distinct win
+— the **standalone "Ableton + lamps only" experience** and feedback — that A
+structurally cannot (Tier 2). B does not replace A; a player can use either, and the
 convention (A) is what B implements natively.
 
 | Criterion | A — MIDI API + Live pack | B — Control Surface |
@@ -97,10 +142,27 @@ Not the tool for this: [als-wire](https://github.com/Beennnn/als-wire) maps an
 a player wants to drive the template's tracks from a hardware controller — but it
 is the opposite direction from the lamp *output* pack, so it does not build it.
 
-## Notes on B — evaluate Max for Live first
+## Mode B is a Max for Live device — decided
 
-Before committing to a raw Remote Script, evaluate a **Max for Live device** for
-Mode B: an M4L patch is far more stable than the Remote Script API, still loads
-inside Live, and can hit the lamps' local API / network directly — potentially the
-same "no separate daemon" win with much lower breakage. Decide M4L-vs-Remote-Script
-when B starts; both satisfy the direct-to-LAN goal.
+Between the two ways to run code inside Live — a **Max for Live device** (`.amxd`,
+Node for Max for networking) vs a raw **Remote Script** (Python via Preferences →
+MIDI → Control Surface) — **we pick Max for Live.**
+
+| Criterion | **Max for Live** | Remote Script |
+|---|---|---|
+| API stability | Live Object Model, **documented + supported** | `_Framework`/`ableton.v2-v3`, **semi-private, undocumented** (shifted Live 10→11 Py2→3, 11→12) |
+| Install | `.amxd`, drag-drop from the browser | copy a folder into `MIDI Remote Scripts/` + restart Live |
+| On-track UI (to display feedback) | **Yes** (device panel) | **None** (feedback only to hardware LEDs) |
+| Direct network (WLED HTTP/UDP) | **Node for Max** (`http`/`dgram`) | Python `socket`/`urllib` |
+| Live editions | **Suite only** (or the M4L add-on) | All (Intro/Standard/Suite) |
+| Maintenance | Low | High (version-fragile) |
+
+**Why the Suite-only cost is acceptable:** the *universal* need is already met by
+**Tier 1** (Mode A works in every DAW and every Live edition). Mode B is the **depth**
+layer, so it may be selective — API stability, a real UI to show feedback, and easy
+networking (Node for Max) outweigh reaching non-Suite users *here*. Remote Script's
+only edge (all editions) is redundant with Tier 1.
+
+**Delegation option:** the device talks to lamps directly by default, but can route
+through the engine's `:8377` API when the engine is running — so an Ableton show and a
+Stream Deck stay in sync on one shared state.
