@@ -71,12 +71,18 @@ transport but **what stock Live can DO with incoming MIDI**:
 
 - **Value-level feedback → stays Tier 1** (no M4L, all editions): an incoming CC can be
   **MIDI-mapped** to an on-screen control, so a fader follows the real brightness, a
-  button reflects on/off. Good for hardware controllers with faders/LEDs.
-- **Hardware echo** (motorised fader, controller LEDs): stock MIDI-map doesn't auto-echo
-  out; that usually wants a Control Surface script (Mode B territory).
-- **Rich/visual feedback** (the true colour as a swatch, effect *names*, a readable panel
-  in Live) → **needs a program that renders it** = **Mode B (M4L)**. A raw CC carries a
-  number, not a colour or a label.
+  button reflects on/off.
+- **Hardware echo → also Tier 1** (motorised fader, controller LEDs): stock Live **does**
+  re-emit a mapped parameter's value out when the port's **"Remote" output** toggle is on
+  (Preferences → MIDI) — **no Control Surface script needed**. Full chain: engine CC in →
+  mapped param → Live echoes out → the controller moves. Two caveats: keep the return
+  CCs/port **distinct** from the play controls (avoid feedback loops), and "Remote Out"
+  handles a CC's **value** (fader, simple on/off LED) — **structured** feedback (RGB pad
+  colours, text displays, takeover) still wants a script/M4L.
+- **Rich/visual feedback in Live's own UI** (the true colour as a swatch, effect *names*,
+  a readable panel) → **needs a program that renders it** = **Mode B (M4L)**. This is the
+  *only* thing that genuinely requires M4L: a raw CC carries a number, not a colour or a
+  label.
 
 So the split is by **richness of feedback**, not "A has none, B has all": value-level
 feedback via a return MIDI port is a Tier-1 option; rich visual feedback is what M4L is
@@ -115,10 +121,11 @@ below). This mode earns its keep with two advantages the pack can't give:
 2. **Rich, in-Live visual feedback** — the lamps' **real** state shown *as state*: the
    true colour as a swatch, the effect **name**, a readable device panel; state never
    drifts when the Stream Deck (or anything else) changes a lamp. Note the nuance (see
-   Mode A → *On feedback*): **value-level** feedback (a fader following brightness) is a
-   Tier-1 option via a return MIDI port + MIDI-mapping, no M4L. What M4L uniquely buys is
-   **rendering** state a raw CC can't carry — colours, labels, a panel. WLED **pushes**
-   state over a WebSocket (`ws://<lamp>/ws`), which the device subscribes to.
+   Mode A → *On feedback*): **value-level feedback and hardware echo** (a fader/LED
+   following brightness) are Tier-1 via a return MIDI port + MIDI-mapping + the port's
+   "Remote" Out, no M4L. What M4L *uniquely* buys is **rendering** state a raw CC can't
+   carry — colours, labels, a panel. WLED **pushes** state over a WebSocket
+   (`ws://<lamp>/ws`), which the device subscribes to.
 
 ## Decision
 
@@ -135,7 +142,7 @@ convention (A) is what B implements natively.
 | Reaches lamps with **only Ableton + LAN** | No (needs the bridge process) | **Yes** (script talks to lamps directly) |
 | Depends on Ableton's private API | No | Yes (version-fragile) |
 | Clip automation of lamp params | **Native** | Native |
-| Feedback into Live / controller | Value-level (return MIDI port + MIDI-map) | **Rich/visual** (colour swatch, effect name, panel) |
+| Feedback into Live / controller | Value-level **+ hardware echo** (return MIDI port + MIDI-map + "Remote" Out) | Only **rich/visual rendering** (colour swatch, effect name, panel) |
 | Works in other DAWs | **Yes** | Live-only |
 | Maintenance cost | Low | Higher |
 | Ships | **v1** | **v2** |
