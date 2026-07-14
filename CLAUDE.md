@@ -17,9 +17,13 @@ Ableton Live integration layer for the OpenLamp / LumiDeck lamp stack.
 - **Do not re-implement the bridge or the OLS contract.** Mode A rides the existing
   `LumiDeck` virtual port + engine local API (`127.0.0.1:8377`). Mode B may talk to
   lamps directly over the LAN, but reuse the OLS command vocabulary, don't fork it.
-- **Ableton binary assets are build outputs**, generated from a versioned
-  `mapping.spec.json` via [als-wire](https://github.com/Beennnn/als-wire) — never
-  hand-clicked `.als`/`.adg` committed as opaque binaries that drift.
+- **Everything derives from `ableton/mapping.spec.json`.** The `.mid` clips are
+  generated (open format) via `tools/gen_clips.py`; the `.als` template is exported
+  once from Live (its binary format is Ableton's, version-fragile — don't synthesize
+  it headless). Note: stock Live macros can't emit outgoing CC, so Mode A's
+  continuous control is clip CC automation, not macros (macro→CC out = Max for Live
+  = Mode B). als-wire maps *incoming* controller CC → macros — orthogonal, not the
+  pack generator.
 - **Mode B is version-fragile by nature** (Live's Remote Script API is semi-private).
   Pin a Live version, prefer Max for Live if it satisfies the direct-to-LAN goal.
 - **Family conventions apply** (EUPL-1.2, one concern per repo, English public docs,

@@ -42,8 +42,11 @@ API); Mode B (Control Surface) will have its own install doc when it ships — s
 Full message map: **[MIDI-PROTOCOL.md](https://github.com/openlamp/midi/blob/main/MIDI-PROTOCOL.md)**
 (this repo does not duplicate it — that file is the source of truth).
 
-## The pack (coming)
+## Faster: drag the generated clips
 
-Once the `.adg` rack + `.als` template land in [`../ableton/`](../ableton/), you'll
-skip the manual wiring: load the rack, macros are pre-mapped to the CCs and each
-demo track is pre-set to its group's channel. Tracked in [TASKS.md](../TASKS.md).
+Instead of drawing notes by hand, drop the ready-made clips from
+[`../ableton/clips/`](../ableton/clips/) onto a `LumiDeck`-routed track:
+`note60-jaune.mid` fires yellow, `note53-blackout.mid` blacks out, etc. The track's
+channel still selects the group. Regenerate them with
+`python3 tools/gen_clips.py`. A pre-routed `.als` template is on the way — see
+[TASKS.md](../TASKS.md).

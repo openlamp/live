@@ -31,10 +31,11 @@ assets + docs** — the runtime already exists in the bridge.
 
 ## What this project delivers
 
-- **An Ableton Live pack** — a MIDI Effect Rack whose eight macros map to the
-  convention's continuous controls (brightness, hue, saturation, CCT, effect
-  fx/sx/ix), plus a clip/scene template (one MIDI track per lamp group, on the
-  matching channel) and a demo `.als` set. **← the foundation.**
+- **An Ableton Live pack** — a MIDI track routed to `LumiDeck` carries notes
+  (colour/power/animation triggers) and CC automation (brightness/hue/sat/CCT/fx).
+  Shipped as **draggable `.mid` clips generated from the mapping spec** (open,
+  reproducible format) plus a pre-routed demo `.als` template. Stock Live only, no
+  private API. **← the foundation.**
 - **A documented setup path** — [docs/ABLETON-SETUP.md](docs/ABLETON-SETUP.md):
   create the `LumiDeck` port, route a Live track to it, pick the channel per group.
 - **A Control Surface (MIDI Remote Script)** — *on the roadmap (v2)*, for players
@@ -44,9 +45,9 @@ assets + docs** — the runtime already exists in the bridge.
 
 ## Status
 
-🚧 **Initiated** — design locked, docs written, Ableton binary assets
-(`.adg` rack, `.als` template) to be authored next (built programmatically with
-[als-wire](https://github.com/Beennnn/als-wire)). See [TASKS.md](TASKS.md).
+🚧 **Mode A in progress** — convention spec + 19 generated `.mid` clips shipped;
+next is testing on real lamps and authoring the pre-routed `.als` template. Mode B
+(Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 
 ## Requirements
 
