@@ -7,8 +7,8 @@ matériel** ; Mode B = **décidé (Max for Live)**, pas commencé.
 
 ## Tier 1 — accessible à tous (Mode A turnkey, tout DAW / toute édition)
 
-- ✅ `ableton/mapping.spec.json` (miroir pinné wled-midi **v0.3.0**) + 19 clips `.mid` générés & vérifiés SMF
-- ☐ **[BLOQUÉ — rig offline]** Tester les 19 clips contre le moteur sur vraies lampes → confirmer que chaque note déclenche la bonne action/cible. Blocage : lampes injoignables (Mac pas sur BEN-MUSIC, `L1`/`L2` = `connected:false` sur `:8377`). Se débloque au rallumage → débloque aussi les tests MPE + beat-rate côté wled-midi.
+- ✅ `ableton/mapping.spec.json` (miroir pinné wled-midi **v0.4.0**) + 20 clips `.mid` générés & vérifiés SMF (incl. `note59-black`)
+- ☐ **[BLOQUÉ — rig offline]** Tester les 20 clips contre le moteur sur vraies lampes → confirmer que chaque note déclenche la bonne action/cible. Blocage : lampes injoignables (Mac pas sur BEN-MUSIC, `L1`/`L2` = `connected:false` sur `:8377`). Se débloque au rallumage → débloque aussi les tests MPE + beat-rate côté wled-midi.
 - ☐ Confirmer l'import des clips CC-sweep (`cc1-bri`, `cc3-hue`) dans Live → si Live ne porte pas le CC en automation, documenter le « redraw as clip automation » ou livrer un `.alc`
 - ☐ Authorer `ableton/OpenLamp-demo.als` → 1 piste MIDI/cible pré-routée au port `OpenLamp`, clips posés → set démo turnkey. **Faisable à froid** (Ableton seul, sans lampes) via computer-use.
 - ☐ **[repo engine]** Packager le moteur en **appli no-install** (`.app`/`.exe`, barre de menu, signée, headless) → enlève la seule barrière du chemin universel (« lancer un process Python »). Suivi dans [openlamp/engine](https://github.com/openlamp/engine).
