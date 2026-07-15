@@ -25,7 +25,7 @@ speaking the [wled-midi](https://github.com/openlamp/wled-midi) convention); Mod
 
 ## Drive the lamps
 
-- **Looks / triggers** — play notes: 60–67 = the 8 colours, 68 = effect look;
+- **Looks / triggers** — play notes: 59–67 = the 9 colours (59 black + 7 hues + 67 white), 68 = effect look;
   48/50/52 = off/on/toggle, 53/55 = blackout/restore, 56 = solid. Modifiers overlay
   the current look: 72 = beat toggle (pulse on the beat), 73 = flash. Put them in
   clips, one per song section.

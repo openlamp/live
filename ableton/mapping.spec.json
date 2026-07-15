@@ -1,8 +1,9 @@
 {
-  "_comment": "Pinned clip-naming mirror of the wled-midi v0.3.0 core map (github.com/openlamp/wled-midi). The wire semantics + zone rules live THERE — this file only gives the clip generator note numbers + human labels for filenames. Do not diverge; bump when wled-midi bumps.",
+  "_comment": "Pinned clip-naming mirror of the wled-midi v0.4.0 core map (github.com/openlamp/wled-midi). The wire semantics + zone rules live THERE — this file only gives the clip generator note numbers + human labels for filenames. Do not diverge; bump when wled-midi bumps.",
   "spec_ref": "https://github.com/openlamp/wled-midi",
-  "spec_version": "0.3.0",
+  "spec_version": "0.4.0",
   "notes": {
+    "59": "black",
     "60": "red", "61": "orange", "62": "yellow", "63": "green",
     "64": "cyan", "65": "blue", "66": "magenta", "67": "white", "68": "effect",
     "48": "off", "50": "on", "52": "toggle",
