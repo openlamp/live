@@ -105,3 +105,7 @@ Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 [MIT](LICENSE) — like the rest of the OpenLamp galaxy: permissive, so anyone can adopt or
 fork it freely. (The shared convention repo, [wled-midi](https://github.com/openlamp/wled-midi),
 is MIT too.)
+
+---
+
+**Two open standards, one bridge.** This implements the open [**wled-midi**](https://github.com/openlamp/wled-midi) convention — the agreed dictionary between [**MIDI**](https://midi.org) (the MIDI Association) and [**WLED**](https://kno.wled.ge). Free for anyone to build on: see the convention's [openness & patent policy](https://github.com/openlamp/wled-midi/blob/main/SPEC.md) (§14) and the [licensing note](https://github.com/openlamp/wled-midi/blob/main/docs/licensing.md). Part of [OpenLamp](https://github.com/openlamp).
