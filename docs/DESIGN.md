@@ -164,7 +164,7 @@ Config-as-code, pinned to one source: **`ableton/mapping.spec.json`** mirrors th
 `.mid` clips being an open format is what lets us *generate and test* them here;
 that's why the pack is clips-first, template-second.
 
-Not the tool for this: [als-wire](https://github.com/Beennnn/als-wire) maps an
+Not the tool for this: [als-wire](https://github.com/Beennnn/ableton-als-wire) maps an
 **incoming** controller's CC onto rack macros (controller → Live). Useful later if
 a player wants to drive the template's tracks from a hardware controller — but it
 is the opposite direction from the lamp *output* pack, so it does not build it.
