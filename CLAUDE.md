@@ -18,7 +18,12 @@ Ableton Live frontend for the OpenLamp lamp stack.
   [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention to the lamp MIDI port;
   the engine drives the devices. Mode B may talk to lamps directly over the LAN, but
   it still speaks the same convention — don't fork it.
-- **Everything derives from `ableton/mapping.spec.json`.** The `.mid` clips are
+- **Everything derives from `ableton/mapping.spec.json` — which is itself generated.**
+  `tools/sync_spec.py` derives it from openlamp-spec-midi's own `mapping.spec.json`
+  (sibling checkout if present, else the raw GitHub URL) and stamps the source
+  version into it; `--check` fails on drift. Never hand-edit the file: the previous
+  hand-maintained copy carried a "do not diverge" comment and diverged anyway, two
+  minor versions behind. The `.mid` clips are
   generated (open format) via `tools/gen_clips.py`; the `.als` template is exported
   once from Live (its binary format is Ableton's, version-fragile — don't synthesize
   it headless). Note: stock Live macros can't emit outgoing CC, so Mode A's
