@@ -87,9 +87,12 @@ the engine translates it to WLED JSON state (and Tuya) and drives the devices.
 
 ## Status
 
-🚧 **Mode A in progress** — mapping pinned to the wled-midi v0.2 convention + 19
-generated `.mid` clips (looks + util + modifiers) shipped; next is testing on real
-lamps and authoring the `.als` template.
+🚧 **Mode A in progress** — the mapping is generated from the
+[openlamp-spec-midi](https://github.com/openlamp/openlamp-spec-midi) spec
+([SPEC.md](https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md) is the
+one place a version is stated; `ableton/mapping.spec.json` carries the version it
+was derived from), and the 20 generated `.mid` clips (looks + util + modifiers)
+are shipped; next is testing on real lamps and authoring the `.als` template.
 Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 
 ## Requirements
