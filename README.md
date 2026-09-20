@@ -1,4 +1,6 @@
-# openlamp-live — drive your lamps from Ableton Live
+<p align="center"><img src="assets/banner.svg" alt="OpenLamp Ableton Pack" width="100%"></p>
+
+# OpenLamp Ableton Pack — drive your lamps from Ableton Live
 
 Turn a **track in Ableton Live** into a lamp/show controller: clips, macros and
 automation envelopes drive your [OpenLamp](https://github.com/openlamp) smart LED
@@ -72,7 +74,7 @@ the engine translates it to WLED JSON state (and Tuya) and drives the devices.
 > [`midi.py`](https://github.com/openlamp/openlamp-engine-python/blob/main/midi.py) — the reference
 > implementation of the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention —
 > which opens the `OpenLamp` virtual MIDI port. (On-the-beat tempo-follow is the
-> separate [openlamp-midi](https://github.com/openlamp/openlamp-lib-beatsync) package.)
+> separate [openlamp-lib-beatsync](https://github.com/openlamp/openlamp-lib-beatsync) package.)
 
 ## What this project delivers
 
@@ -106,7 +108,7 @@ Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 ## License
 
 [MIT](LICENSE) — like the rest of the OpenLamp galaxy: permissive, so anyone can adopt or
-fork it freely. (The shared convention repo, [wled-midi](https://github.com/openlamp/openlamp-spec-midi),
+fork it freely. (The shared spec repo, [openlamp-spec-midi](https://github.com/openlamp/openlamp-spec-midi),
 is MIT too.)
 
 ---
