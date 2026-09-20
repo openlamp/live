@@ -8,7 +8,7 @@ lamps (WLED + Tuya) **on the beat, in time with your set** — 100 % local, no c
 
 This repo is the **Ableton Live frontend** of the OpenLamp stack. It doesn't invent
 a protocol: it speaks the open
-**[wled-midi convention](https://github.com/openlamp/openlamp-spec-midi)** (notes → colours,
+**[OpenLamp MIDI spec](https://github.com/openlamp/openlamp-spec-midi)** (notes → colours,
 CC → brightness/effects, Program Change → presets, MIDI clock / Ableton Link →
 on-the-beat) and makes it turnkey inside Live.
 
@@ -64,15 +64,15 @@ Everything is local: Ableton + lamps on your Wi-Fi, nothing in the cloud.
 ```
 Ableton Live  ──MIDI──▶  OpenLamp engine  ──HTTP/UDP──▶  lamps on the LAN
  (clips, macros,          (implements the                 (WLED / Tuya)
-  automation)              wled-midi convention)
+  automation)              OpenLamp MIDI spec)
 ```
 
-Live emits MIDI per the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention;
+Live emits MIDI per the [OpenLamp MIDI](https://github.com/openlamp/openlamp-spec-midi) convention;
 the engine translates it to WLED JSON state (and Tuya) and drives the devices.
 
 > The MIDI→lamp translation runs in the engine's
 > [`midi.py`](https://github.com/openlamp/openlamp-engine-python/blob/main/midi.py) — the reference
-> implementation of the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention —
+> implementation of the [OpenLamp MIDI](https://github.com/openlamp/openlamp-spec-midi) convention —
 > which opens the `OpenLamp` virtual MIDI port. (On-the-beat tempo-follow is the
 > separate [openlamp-lib-beatsync](https://github.com/openlamp/openlamp-lib-beatsync) package.)
 
@@ -101,7 +101,7 @@ Mode B (Control Surface) is designed, not started. See [TASKS.md](TASKS.md).
 
 - The OpenLamp engine running on the LAN, with its MIDI frontend
   ([`midi.py`](https://github.com/openlamp/openlamp-engine-python/blob/main/midi.py)) open — it speaks
-  the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention and opens the
+  the [OpenLamp MIDI](https://github.com/openlamp/openlamp-spec-midi) convention and opens the
   `OpenLamp` virtual MIDI port.
 - Ableton Live 10+ (the pack uses only stock MIDI devices — no private API).
 
@@ -113,4 +113,4 @@ is MIT too.)
 
 ---
 
-**Two open standards, one bridge.** This implements the open [**wled-midi**](https://github.com/openlamp/openlamp-spec-midi) convention — the agreed dictionary between [**MIDI**](https://midi.org) (the MIDI Association) and [**WLED**](https://kno.wled.ge). Free for anyone to build on: see the convention's [openness & patent policy](https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md) (§14) and the [licensing note](https://github.com/openlamp/openlamp-spec-midi/blob/main/docs/licensing.md). Part of [OpenLamp](https://github.com/openlamp).
+**Two open standards, one bridge.** This implements the open [**OpenLamp MIDI**](https://github.com/openlamp/openlamp-spec-midi) convention — the agreed dictionary between [**MIDI**](https://midi.org) (the MIDI Association) and [**WLED**](https://kno.wled.ge). Free for anyone to build on: see the convention's [openness & patent policy](https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md) (§14) and the [licensing note](https://github.com/openlamp/openlamp-spec-midi/blob/main/docs/licensing.md). Part of [OpenLamp](https://github.com/openlamp).

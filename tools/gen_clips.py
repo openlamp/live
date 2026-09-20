@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate draggable Ableton MIDI clips (.mid) from the wled-midi mapping spec.
+"""Generate draggable Ableton MIDI clips (.mid) from the OpenLamp MIDI mapping spec.
 
 Why .mid and not .als/.adg: a Standard MIDI File is an open, stable format we can
 write byte-for-byte with the stdlib and that Live imports by drag-and-drop. The
