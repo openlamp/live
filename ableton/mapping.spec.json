@@ -1,14 +1,36 @@
 {
-  "_comment": "Pinned clip-naming mirror of the wled-midi v0.4.0 core map (github.com/openlamp/openlamp-spec-midi). The wire semantics + zone rules live THERE — this file only gives the clip generator note numbers + human labels for filenames. Do not diverge; bump when wled-midi bumps.",
-  "spec_ref": "https://github.com/openlamp/openlamp-spec-midi",
-  "spec_version": "0.4.0",
+  "_generated": "GENERATED FILE — do not edit by hand. Regenerate with `python3 tools/sync_spec.py`; the source of truth is SPEC.md in https://github.com/openlamp/openlamp-spec-midi.",
+  "_comment": "Clip-naming mirror of the openlamp-spec-midi note/CC map. This pack only needs note numbers + human labels, because the label becomes a clip filename. The wire semantics and zone rules live in SPEC.md.",
+  "spec_ref": "https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md",
+  "spec_version": "0.6.3",
   "notes": {
     "59": "black",
-    "60": "red", "61": "orange", "62": "yellow", "63": "green",
-    "64": "cyan", "65": "blue", "66": "magenta", "67": "white", "68": "effect",
-    "48": "off", "50": "on", "52": "toggle",
-    "53": "blackout", "55": "restore", "56": "solid",
-    "72": "beat", "73": "flash"
+    "60": "red",
+    "61": "orange",
+    "62": "yellow",
+    "63": "green",
+    "64": "cyan",
+    "65": "blue",
+    "66": "magenta",
+    "67": "white",
+    "68": "effect",
+    "48": "off",
+    "50": "on",
+    "52": "toggle",
+    "53": "blackout",
+    "55": "restore",
+    "56": "solid",
+    "72": "beat",
+    "73": "flash"
   },
-  "cc": { "1": "bri", "2": "cct", "3": "hue", "4": "sat", "5": "fx", "6": "sx", "7": "ix", "8": "pal" }
+  "cc": {
+    "1": "bri",
+    "2": "cct",
+    "3": "hue",
+    "4": "sat",
+    "5": "fx",
+    "6": "sx",
+    "7": "ix",
+    "8": "pal"
+  }
 }

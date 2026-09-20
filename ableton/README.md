@@ -1,9 +1,12 @@
 # Ableton assets
 
-Mode A assets. Everything derives from **`mapping.spec.json`** — a pinned mirror of
-the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) core (note/CC numbers). The
-wire semantics + value transforms are the spec's; do not diverge. See
-[../docs/DESIGN.md](../docs/DESIGN.md).
+Mode A assets. Everything derives from **`mapping.spec.json`** — which is itself
+**generated** from the [openlamp-spec-midi](https://github.com/openlamp/openlamp-spec-midi)
+spec by [`../tools/sync_spec.py`](../tools/sync_spec.py). Don't edit it by hand:
+regenerate it, or the copy silently drifts from the spec (it did — it sat two
+minor versions behind). The wire semantics + value transforms are the spec's; this
+pack only keeps note numbers and labels, because a label becomes a clip filename.
+See [../docs/DESIGN.md](../docs/DESIGN.md).
 
 | Path | What | Status |
 |---|---|---|
