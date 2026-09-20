@@ -1,7 +1,7 @@
 # Ableton setup — Mode A (MIDI pack)
 
 Get lamps reacting to a Live set in a few minutes. This is **Mode A** (Ableton
-speaking the [wled-midi](https://github.com/openlamp/wled-midi) convention); Mode B
+speaking the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention); Mode B
 (Control Surface) will have its own install doc when it ships — see
 [DESIGN.md](DESIGN.md).
 
@@ -10,7 +10,7 @@ speaking the [wled-midi](https://github.com/openlamp/wled-midi) convention); Mod
 1. Lamps reachable on your LAN (WLED and/or Tuya), configured in the OpenLamp engine.
 2. The engine's MIDI frontend running — it opens the `OpenLamp` virtual MIDI port:
    ```
-   python3 midi.py        # from github.com/openlamp/engine — opens the "OpenLamp" port
+   python3 midi.py        # from github.com/openlamp/openlamp-engine-python — opens the "OpenLamp" port
    ```
 
 ## Route Live to the lamps
@@ -19,7 +19,7 @@ speaking the [wled-midi](https://github.com/openlamp/wled-midi) convention); Mod
    (output) for the lamp port.
 2. Add a **MIDI track**. Set its **MIDI To** → the lamp port, and pick the
    **channel** for the target you want to drive (channel = device/segment/group, per
-   the [wled-midi convention](https://github.com/openlamp/wled-midi/blob/main/SPEC.md#2-channel--target-core)):
+   the [wled-midi convention](https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md#2-channel--target-core)):
    e.g. Ch 1 → all, Ch 2 → front, Ch 3 → back … (defined in your engine routing).
 3. One track per target. Multiple targets = multiple tracks, each on its channel.
 
@@ -36,7 +36,7 @@ speaking the [wled-midi](https://github.com/openlamp/wled-midi) convention); Mod
 - **On the beat** — the engine follows Live's tempo (MIDI clock / Ableton Link), so
   pulses land on the beat with a phase-accurate downbeat accent.
 
-Full message map + value transforms: **[wled-midi SPEC.md](https://github.com/openlamp/wled-midi/blob/main/SPEC.md)**
+Full message map + value transforms: **[wled-midi SPEC.md](https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md)**
 (this repo does not duplicate it — that spec is the source of truth).
 
 ## Faster: drag the generated clips

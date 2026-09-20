@@ -1,7 +1,7 @@
 # Ableton assets
 
 Mode A assets. Everything derives from **`mapping.spec.json`** — a pinned mirror of
-the [wled-midi](https://github.com/openlamp/wled-midi) core (note/CC numbers). The
+the [wled-midi](https://github.com/openlamp/openlamp-spec-midi) core (note/CC numbers). The
 wire semantics + value transforms are the spec's; do not diverge. See
 [../docs/DESIGN.md](../docs/DESIGN.md).
 
