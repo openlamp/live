@@ -45,7 +45,7 @@ complementary, not either/or.
 ### Mode A — base MIDI API  (the stable foundation)
 
 Live emits standard MIDI per the
-[wled-midi convention](https://github.com/openlamp/openlamp-spec-midi); the engine (via its
+[OpenLamp MIDI spec](https://github.com/openlamp/openlamp-spec-midi); the engine (via its
 [`midi.py`](https://github.com/openlamp/openlamp-engine-python/blob/main/midi.py)) translates it to
 WLED JSON state / Tuya and drives the lamps.
 
@@ -90,7 +90,7 @@ for. In both cases the **engine** is what produces the feedback (it consumes WLE
 WebSocket) — feedback needs *a program somewhere*, not M4L specifically.
 
 - **The convention already exists and is tested** —
-  [wled-midi](https://github.com/openlamp/openlamp-spec-midi): notes → colours/power, CC →
+  [OpenLamp MIDI](https://github.com/openlamp/openlamp-spec-midi): notes → colours/power, CC →
   brightness/hue/sat/CCT + effect fx/sx/ix, Program Change → presets, one channel per
   target/group.
 - `openlamp-live` adds the **Ableton-native pack**: a MIDI track routed to the

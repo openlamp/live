@@ -8,14 +8,14 @@ Ableton Live frontend for the OpenLamp lamp stack.
   Surface (Mode B) — that lets a user program lamp automations from Live with only
   Ableton + lamps on the LAN. See [docs/DESIGN.md](docs/DESIGN.md).
 - **IS NOT**: a MIDI protocol. The wire convention lives in
-  [openlamp/wled-midi](https://github.com/openlamp/openlamp-spec-midi) and MUST NOT be
+  [openlamp/openlamp-spec-midi](https://github.com/openlamp/openlamp-spec-midi) and MUST NOT be
   duplicated here — reference it and pin a version. Ableton is just one frontend that
   speaks it (a Stream Deck plugin is a peer frontend).
 
 ## Golden rules
 
 - **Do not re-implement the convention or the engine.** Mode A emits the
-  [wled-midi](https://github.com/openlamp/openlamp-spec-midi) convention to the lamp MIDI port;
+  [OpenLamp MIDI](https://github.com/openlamp/openlamp-spec-midi) convention to the lamp MIDI port;
   the engine drives the devices. Mode B may talk to lamps directly over the LAN, but
   it still speaks the same convention — don't fork it.
 - **Everything derives from `ableton/mapping.spec.json` — which is itself generated.**
@@ -38,9 +38,9 @@ Ableton Live frontend for the OpenLamp lamp stack.
 ## Stack
 
 ```
-Live ──MIDI (wled-midi)──▶ lamp port ──▶ engine ──HTTP/UDP──▶ lamps   (Mode A)
+Live ──MIDI (OpenLamp MIDI)──▶ lamp port ──▶ engine ──HTTP/UDP──▶ lamps   (Mode A)
 Live (Remote Script / M4L) ──────────HTTP/UDP──────────────────▶ lamps   (Mode B, direct-to-LAN)
 
-(The MIDI→lamp step runs in the engine's midi.py — the wled-midi reference impl —
+(The MIDI→lamp step runs in the engine's midi.py — the OpenLamp MIDI reference impl —
 opening the `OpenLamp` virtual MIDI port. Tempo-follow is the openlamp-midi package.)
 ```

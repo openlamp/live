@@ -2,7 +2,7 @@
 """Derive ableton/mapping.spec.json from the openlamp-spec-midi spec.
 
 Why this script exists: the pack used to keep a HAND-MAINTAINED copy of the note
-and CC map, with a comment reading "Do not diverge; bump when wled-midi bumps".
+and CC map, with a comment reading "Do not diverge; bump when OpenLamp MIDI bumps".
 It diverged anyway — the copy sat at spec_version 0.4.0 while SPEC.md moved to
 0.6.3. A comment is not a mechanism. This script is the mechanism.
 
